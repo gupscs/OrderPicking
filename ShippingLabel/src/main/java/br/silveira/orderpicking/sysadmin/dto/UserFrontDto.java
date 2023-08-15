@@ -49,6 +49,7 @@ public class UserFrontDto {
         dto.setAvatar("@/assets/images/avatars/13-small.png");
         dto.setRole("CUSTOMER");
         dto.addAbility("all","CUSTOMER");
+        dto.addAbility("all","ADMIN");
         return dto;
     }
 
