@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface MercadoLivreSetupRepository extends JpaRepository<MercadoLivreSetup, Long> {
 
 
-    public Optional<MercadoLivreSetup> findByCompanyIdAndSellerId(String companyId, String sellerId);
+    public Optional<MercadoLivreSetup> findByCompanyIdAndSellerId(Long companyId, String sellerId);
 
     public Optional<MercadoLivreSetup> findByCompanyIdAndAuthorizationCode(Long companyId, String authorizationCode);
 }

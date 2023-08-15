@@ -14,7 +14,7 @@ public class Company {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String cnpj;
+    private String identificationNo; //cnpj
     @Column(nullable = false)
     private Long phone;
     @Column(nullable = false)

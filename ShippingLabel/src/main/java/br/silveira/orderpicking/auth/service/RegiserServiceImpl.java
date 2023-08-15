@@ -35,7 +35,7 @@ public class RegiserServiceImpl implements RegisterService {
     @Override
     public RegisterCheck registerCheck(String identificationNo, String username) {
         RegisterCheck ret = new RegisterCheck();
-        ret.setExistIdentificationNo(organizationalResource.existByCnpj(identificationNo).getBody());
+        ret.setExistIdentificationNo(organizationalResource.existByIdentificationNo(identificationNo).getBody());
         ret.setExistUsername(sysAdminResource.existByUsername(username).getBody());
         return ret;
     }

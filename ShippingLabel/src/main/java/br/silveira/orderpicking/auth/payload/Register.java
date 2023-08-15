@@ -18,7 +18,7 @@ public class Register {
 
     public Company toCompany() {
         Company company = new Company();
-        company.setCnpj(identificationNo);
+        company.setIdentificationNo(identificationNo);
         company.setName(name);
         company.setPhone(phone);
         company.setInsertDate(LocalDateTime.now());

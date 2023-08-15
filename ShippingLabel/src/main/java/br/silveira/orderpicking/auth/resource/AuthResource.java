@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthResource {
@@ -33,7 +35,7 @@ public class AuthResource {
     private RegisterService registerService;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<?> signin(@Valid @RequestParam("username") String username,@Valid @RequestParam("password") String password) {
         try {
            log.info("{} Sign in", username);
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -41,7 +43,7 @@ public class AuthResource {
             String jwt = jwtUtils.generateJwtToken(userDetails);
             return ResponseEntity.ok(new AuthResponse(userDetails.getCompanyId(), userDetails.getUsername(), jwt));
         }catch(BadCredentialsException e){
-            log.info("{} BadCredentialsException: Message {}", username, e.getMessage());
+            log.warn("{} BadCredentialsException: Message {}", username, e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }catch(Exception e){
             log.error("Sign in error", e);
@@ -50,7 +52,7 @@ public class AuthResource {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody Register register) {
+    public ResponseEntity<Void> register(@Valid @RequestBody Register register) {
         try {
             registerService.register(register);
             return ResponseEntity.ok().build();
@@ -61,7 +63,7 @@ public class AuthResource {
     }
 
     @GetMapping("/registerCheck/{identificationNo}/{username}")
-    public ResponseEntity<RegisterCheck> registerCheck(@PathVariable String identificationNo, @PathVariable String username) {
+    public ResponseEntity<RegisterCheck> registerCheck(@Valid @PathVariable String identificationNo,@Valid @PathVariable String username) {
         try {
             RegisterCheck dto = registerService.registerCheck(identificationNo, username);
             return ResponseEntity.ok().body(dto);

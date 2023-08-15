@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -35,7 +36,8 @@ public class MercadoLivreServiceImpl extends CommonService implements MercadoLiv
     private MercadoLivreSetupRepository mercadoLivreSetupRepository;
 
     @Override
-    public String getToken(String companyId, String sellerId) {
+    public String getToken(String sellerId) {
+        Long companyId = getCompanyId();
         log.info("getToken - Company Id {} , Seller Id {}", companyId, sellerId);
         Optional<MercadoLivreSetup> mercadoLivreSetup = mercadoLivreSetupRepository.findByCompanyIdAndSellerId(companyId, sellerId);
         MercadoLivreSetup entity = mercadoLivreSetup.orElseThrow(() -> new EntityNotFoundException(String.format("Mercado Livre Setup not found for Company Id: %s and Selelr Id: %s", companyId, sellerId)));
@@ -65,7 +67,8 @@ public class MercadoLivreServiceImpl extends CommonService implements MercadoLiv
     }
 
     @Override
-    public void saveMercadoLivreSetup(Long companyId, String authorizationCode){
+    public void saveMercadoLivreSetup( String authorizationCode){
+        Long companyId = getCompanyId();
         log.info("Creating Mercado Livre Setup - Company Id {}", companyId);
         LocalDateTime now = LocalDateTime.now();
 
@@ -86,6 +89,10 @@ public class MercadoLivreServiceImpl extends CommonService implements MercadoLiv
         entity.setExpiresIn(token.getExpires_in());
         entity.setLastApiTokenUpdated(now);
         entity.setScope(token.getScope());
+        if(entity.getId() != null){
+            entity.setUpdateDate(now);
+            entity.setUpdateId(getLoggedUser());
+        }
         mercadoLivreSetupRepository.save(entity);
 
     }

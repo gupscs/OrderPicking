@@ -1,6 +1,5 @@
 package br.silveira.orderpicking.auth.jwt;
 
-import br.silveira.orderpicking.auth.jwt.JwtTokenUtil;
 import br.silveira.orderpicking.auth.security.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +41,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private boolean hasAuthorizationBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
-            return false;
-        }
-        return true;
+        return !ObjectUtils.isEmpty(header) && header.startsWith("Bearer");
     }
 
     private String getAccessToken(HttpServletRequest request) {
@@ -57,13 +53,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private void setAuthenticationContext(String token, HttpServletRequest request) {
         UserDetails userDetails = getUserDetails(token);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
-        authentication.setDetails( new WebAuthenticationDetailsSource().buildDetails(request));
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     private UserDetails getUserDetails(String token) {
         Claims claims = jwtUtil.parseClaims(token);
-        UserDetailsImpl userDetails = new UserDetailsImpl(claims.getSubject(), (Long) claims.get("companyId"));
+        UserDetailsImpl userDetails = new UserDetailsImpl(claims.getSubject(), Long.getLong(claims.get("companyId").toString()));
         return userDetails;
     }
 }
