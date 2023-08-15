@@ -64,11 +64,9 @@ public class ApplicationSecurity {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         http.authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
-
         http.exceptionHandling()
                 .authenticationEntryPoint(
                         (request, response, ex) -> {
@@ -78,7 +76,6 @@ public class ApplicationSecurity {
                             );
                         }
                 );
-
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
