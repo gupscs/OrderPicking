@@ -89,6 +89,7 @@ public class MercadoLivreServiceImpl extends CommonService implements MercadoLiv
         entity.setExpiresIn(token.getExpires_in());
         entity.setLastApiTokenUpdated(now);
         entity.setScope(token.getScope());
+        entity.setEnable(true);
         if(entity.getId() != null){
             entity.setUpdateDate(now);
             entity.setUpdateId(getLoggedUser());

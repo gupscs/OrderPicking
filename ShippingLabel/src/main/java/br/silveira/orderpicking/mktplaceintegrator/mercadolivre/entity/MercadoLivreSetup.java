@@ -32,6 +32,7 @@ public class MercadoLivreSetup {
     private String insertId;
     private LocalDateTime updateDate;
     private String updateId;
+    private Boolean enable;
 
     public MercadoLivreSetup(){
     }
