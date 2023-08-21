@@ -1,4 +1,4 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.dto;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.dto;
 
 import lombok.Data;
 

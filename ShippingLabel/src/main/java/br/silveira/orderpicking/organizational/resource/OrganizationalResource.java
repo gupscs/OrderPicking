@@ -4,8 +4,7 @@ import br.silveira.orderpicking.organizational.entity.Company;
 import br.silveira.orderpicking.organizational.repository.CompanyRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/organizational")
+@Slf4j
 public class OrganizationalResource {
-    private static final Logger log = LoggerFactory.getLogger(OrganizationalResource.class);
     @Autowired
     private CompanyRepository companyRepository;
 

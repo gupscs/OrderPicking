@@ -1,4 +1,4 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.entity;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity;
 
 import lombok.Data;
 

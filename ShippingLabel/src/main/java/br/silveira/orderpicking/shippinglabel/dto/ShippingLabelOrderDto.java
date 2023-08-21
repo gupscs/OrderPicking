@@ -1,7 +1,8 @@
 package br.silveira.orderpicking.shippinglabel.dto;
 
-import br.silveira.orderpicking.common.MktPlaceEnum;
+import br.silveira.orderpicking.common.constants.MktPlaceEnum;
 import lombok.Data;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,12 @@ public class ShippingLabelOrderDto {
     private String receiverCityName;
     private String receiverZipcode;
     private String shippingId;
+    private String zplCodeLabel;
     private List<ShippingLabelOrderItemDto> orderItem;
+
+    public ShippingLabelOrderItemDto getFirstOrderItem(){
+        return CollectionUtils.isEmpty(orderItem) ? null : orderItem.get(0);
+    }
 
 
     @Data

@@ -1,6 +1,6 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.repository;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.repository;
 
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.entity.MercadoLivreSetup;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity.MercadoLivreSetup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

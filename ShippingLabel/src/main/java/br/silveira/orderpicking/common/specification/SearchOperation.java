@@ -14,7 +14,7 @@ public enum SearchOperation {
     }
 
     public static SearchOperation getSimpleOperation(final String input) {
-        switch (input){
+        switch (input.toLowerCase()){
             case "lk": return LIKE;
             case "eq": return EQUAL;
             case "df": return DIFF;

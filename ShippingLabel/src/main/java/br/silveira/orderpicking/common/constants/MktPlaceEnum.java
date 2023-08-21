@@ -1,4 +1,4 @@
-package br.silveira.orderpicking.common;
+package br.silveira.orderpicking.common.constants;
 
 public enum MktPlaceEnum {
 

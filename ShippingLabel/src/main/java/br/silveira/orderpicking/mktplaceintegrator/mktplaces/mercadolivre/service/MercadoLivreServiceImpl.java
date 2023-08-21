@@ -1,16 +1,14 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.service;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.service;
 
 import br.silveira.orderpicking.common.service.CommonService;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.dto.MercadoLivreTokenDto;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.entity.MercadoLivreSetup;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.repository.MercadoLivreClientRestRepository;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.repository.MercadoLivreSetupRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.dto.MercadoLivreTokenDto;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity.MercadoLivreSetup;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.repository.MercadoLivreClientRestRepository;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.repository.MercadoLivreSetupRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -19,9 +17,9 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MercadoLivreServiceImpl extends CommonService implements MercadoLivreService {
 
-    private static final Logger log = LoggerFactory.getLogger(MercadoLivreServiceImpl.class);
     @Value("${meracodlivre.appId}")
     private String appId;
     @Value("${mercadolivre.client-secret}")

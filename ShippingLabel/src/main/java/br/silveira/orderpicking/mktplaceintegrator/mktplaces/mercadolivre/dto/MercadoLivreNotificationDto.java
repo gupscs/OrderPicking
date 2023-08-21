@@ -1,6 +1,6 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.dto;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.dto;
 
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.entity.MercadoLivreNotification;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity.MercadoLivreNotification;
 import lombok.Data;
 
 @Data

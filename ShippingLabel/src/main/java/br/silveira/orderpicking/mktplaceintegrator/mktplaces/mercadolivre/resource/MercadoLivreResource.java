@@ -1,15 +1,14 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.resource;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.resource;
 
 import br.silveira.orderpicking.common.resource.CommonResource;
 import br.silveira.orderpicking.common.specification.CommonSpecificationBuilder;
 import br.silveira.orderpicking.common.specification.SearchRequest;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.dto.MercadoLivreNotificationDto;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.entity.MercadoLivreSetup;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.repository.MercadoLivreNotificationRepository;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.repository.MercadoLivreSetupRepository;
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.service.MercadoLivreService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.dto.MercadoLivreNotificationDto;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity.MercadoLivreSetup;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.repository.MercadoLivreNotificationRepository;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.repository.MercadoLivreSetupRepository;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.service.MercadoLivreService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,9 +22,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/mercado-livre")
+@Slf4j
 public class MercadoLivreResource extends CommonResource {
 
-    private static final Logger log = LoggerFactory.getLogger(MercadoLivreResource.class);
     @Value("${meracodlivre.appId}")
     public String APP_ID;
     @Value("${mercadolivre.redirect-url}")

@@ -4,10 +4,9 @@ import br.silveira.orderpicking.auth.jwt.JwtTokenUtil;
 import br.silveira.orderpicking.auth.payload.AuthResponse;
 import br.silveira.orderpicking.auth.payload.Register;
 import br.silveira.orderpicking.auth.payload.RegisterCheck;
-import br.silveira.orderpicking.auth.service.RegisterService;
 import br.silveira.orderpicking.auth.security.UserDetailsImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import br.silveira.orderpicking.auth.service.RegisterService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthResource {
-    private static final Logger log = LoggerFactory.getLogger(AuthResource.class);
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired

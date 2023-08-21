@@ -17,8 +17,7 @@ public class CommonSpecificationBuilder<T> {
         return this;
     }
 
-    public final CommonSpecificationBuilder with(SearchCriteria
-                                                      searchCriteria){
+    public final CommonSpecificationBuilder with(SearchCriteria searchCriteria){
         params.add(searchCriteria);
         return this;
     }
@@ -32,8 +31,8 @@ public class CommonSpecificationBuilder<T> {
         for (int idx = 1; idx < params.size(); idx++){
             SearchCriteria criteria = params.get(idx);
             result =  SearchOperation.getDataOption(criteria.getDataOption()) == SearchOperation.ALL
-                    ? Specification.where(result).and(new CommonSpecification(criteria))
-                    : Specification.where(result).or(new CommonSpecification(criteria));
+                    ? Specification.where(result).and(new CommonSpecification<T>(criteria))
+                    : Specification.where(result).or(new CommonSpecification<T>(criteria));
         }
         return result;
     }

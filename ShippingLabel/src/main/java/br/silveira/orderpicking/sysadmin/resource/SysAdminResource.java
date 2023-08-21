@@ -5,8 +5,7 @@ import br.silveira.orderpicking.sysadmin.entity.User;
 import br.silveira.orderpicking.sysadmin.repository.UserRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,9 +17,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/sysadmin")
 @CrossOrigin(origins = "http://localhost:8080/")
+@Slf4j
 public class SysAdminResource {
-
-    private static final Logger log = LogManager.getLogger(SysAdminResource.class);
 
     private static PasswordEncoder encoder = new BCryptPasswordEncoder();
 

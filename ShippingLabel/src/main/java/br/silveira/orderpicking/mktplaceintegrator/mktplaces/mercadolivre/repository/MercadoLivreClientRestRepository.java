@@ -1,6 +1,6 @@
-package br.silveira.orderpicking.mktplaceintegrator.mercadolivre.repository;
+package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.repository;
 
-import br.silveira.orderpicking.mktplaceintegrator.mercadolivre.dto.MercadoLivreTokenDto;
+import br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.dto.MercadoLivreTokenDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +47,7 @@ public interface MercadoLivreClientRestRepository {
      * @return
      * Example: curl -X GET -H 'Authorization: Bearer $ACCESS_TOKEN'  https://api.mercadolibre.com/orders/search?seller=$SELLER_ID&order.date_created.from=2015-07-01T00:00:00.000-00:00&order.date_created.to=2015-07-31T00:00:00.000-00:00
      */
-    @RequestMapping(method = RequestMethod.GET, value = "orders/search?seller={$SELLER_ID}&{$FILTERS}", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "orders/search?seller={$SELLER_ID}{$FILTERS}", produces = "application/json")
     public Object listOrder(@RequestHeader(value = "Authorization", required = true) String bearerToken, @PathVariable("$SELLER_ID") String sellerId, @PathVariable("$FILTERS") String filterParams);
 
     //TODO TESTAR SHIPMENTS SEPARADOS POR VIRGULA

@@ -2,8 +2,7 @@ package br.silveira.orderpicking.auth.jwt;
 
 import br.silveira.orderpicking.auth.security.UserDetailsImpl;
 import io.jsonwebtoken.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class JwtTokenUtil {
-    private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
 
     @Value("${app.jwtSecret}")
     private String jwtSecret;
@@ -39,15 +38,15 @@ public class JwtTokenUtil {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException ex) {
-            logger.error("JWT expired", ex.getMessage());
+            log.error("JWT expired", ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            logger.error("Token is null, empty or only whitespace", ex.getMessage());
+            log.error("Token is null, empty or only whitespace", ex.getMessage());
         } catch (MalformedJwtException ex) {
-            logger.error("JWT is invalid", ex);
+            log.error("JWT is invalid", ex);
         } catch (UnsupportedJwtException ex) {
-            logger.error("JWT is not supported", ex);
+            log.error("JWT is not supported", ex);
         } catch (SignatureException ex) {
-            logger.error("Signature validation failed");
+            log.error("Signature validation failed");
         }
 
         return false;
