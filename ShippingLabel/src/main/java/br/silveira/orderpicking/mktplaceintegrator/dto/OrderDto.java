@@ -3,6 +3,7 @@ package br.silveira.orderpicking.mktplaceintegrator.dto;
 import br.silveira.orderpicking.common.constants.MktPlaceEnum;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class OrderDto {
     private String sellerId;
     private String mktPlaceOrderid;
     private String mktPlaceStatus;
-    private Date orderCreationDate;
+    private LocalDateTime orderCreationDate;
     private String receiverCityName;
     private String receiverZipcode;
     private String shippingId;
@@ -23,7 +24,7 @@ public class OrderDto {
 
     @Data
     public class OrderItemDto {
-        private String id;
+        private String mktPlaceItemId;
         private String title;
         private String sellerSku;
         private double quantity;

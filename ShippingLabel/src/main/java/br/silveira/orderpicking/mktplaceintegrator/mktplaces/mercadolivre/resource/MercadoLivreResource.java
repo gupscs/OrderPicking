@@ -48,12 +48,12 @@ public class MercadoLivreResource extends CommonResource {
     }
 
     @GetMapping("/MercadoLivreSetup")
-    public ResponseEntity<List<MercadoLivreSetup> > getMercadoLivreSetup(@RequestBody SearchRequest searchRequest){
+    public ResponseEntity<List<MercadoLivreSetup> > getMercadoLivreSetup(@RequestBody(required = false) SearchRequest searchRequest){
         try {
             Specification<MercadoLivreSetup> specification = (Specification<MercadoLivreSetup>) getSpecification(searchRequest, new CommonSpecificationBuilder<MercadoLivreSetup>());
             List<MercadoLivreSetup> list = mercadoLivreSetupRepository.findAll(specification);
             if (list == null || list.isEmpty()) {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.noContent().build();
             } else {
                 return ResponseEntity.ok(list);
             }

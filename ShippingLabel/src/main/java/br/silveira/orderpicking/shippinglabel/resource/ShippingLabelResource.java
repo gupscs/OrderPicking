@@ -35,7 +35,7 @@ public class ShippingLabelResource {
 
 
 
-    @GetMapping("/getShippingLabelWithZplCodeOrderedInFile/")
+    @GetMapping("/getShippingLabelWithZplCodeOrderedInFile/{ordered}/{mixMktPlace}")
     public ResponseEntity<Resource> getShippingLabelWithZplCodeOrderedInFile(@RequestBody List<ShippingLabelOrderDto> orders, @Valid @PathVariable(value = "ordered")  String ordered, @Valid @PathVariable(value = "mixMktPlace") Boolean mixMktPlace){
         try {
             ShippingLabelZipFileDto zipFileDto = shippingLabelService.getShippingLabelWithZplCodeOrderedInFile(orders, ordered, mixMktPlace);

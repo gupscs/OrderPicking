@@ -23,12 +23,12 @@ public class JwtTokenUtil {
     public String generateJwtToken(UserDetailsImpl userDetails) {
         Date now = new Date();
         Map<String, Object> claims = new HashMap<>();
-        claims.put("companyId", userDetails.getCompanyId());
+        claims.put("companyId", userDetails.getCompanyId().toString());
         return Jwts.builder()
-                .setSubject((userDetails.getUsername()))
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtExpirationMs))
+                .setSubject(userDetails.getUsername())
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

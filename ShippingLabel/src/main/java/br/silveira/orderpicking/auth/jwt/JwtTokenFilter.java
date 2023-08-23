@@ -59,7 +59,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private UserDetails getUserDetails(String token) {
         Claims claims = jwtUtil.parseClaims(token);
-        UserDetailsImpl userDetails = new UserDetailsImpl(claims.getSubject(), Long.getLong(claims.get("companyId").toString()));
+        UserDetailsImpl userDetails = new UserDetailsImpl(claims.getSubject(), Long.valueOf((String) claims.get("companyId")));
         return userDetails;
     }
 }
