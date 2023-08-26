@@ -16,5 +16,5 @@ public interface ShippingLabelService {
 
     String getZplCodeOrdered(List<ShippingLabelOrderDto> orders, String ordered, Boolean mixMktPlace);
 
-    ShippingLabelZipFileDto getShippingLabelWithZplCodeOrderedInFile(List<ShippingLabelOrderDto> orders, String ordered, Boolean mixMktPlace) throws IOException;
+    ShippingLabelZipFileDto getShippingLabelWithZplCodeOrderedInFile(List<ShippingLabelOrderDto> orders, String ordered, Boolean mixMktPlace) throws Exception;
 }

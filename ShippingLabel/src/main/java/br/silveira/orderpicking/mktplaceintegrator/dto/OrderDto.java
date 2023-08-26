@@ -20,7 +20,7 @@ public class OrderDto {
     private String receiverZipcode;
     private String shippingId;
     private List<OrderDto.OrderItemDto> orderItem;
-
+    private double totalPrice;
 
     @Data
     public class OrderItemDto {
@@ -29,5 +29,6 @@ public class OrderDto {
         private String sellerSku;
         private double quantity;
         private double unitPrice;
+        private double totalPrice;
     }
 }

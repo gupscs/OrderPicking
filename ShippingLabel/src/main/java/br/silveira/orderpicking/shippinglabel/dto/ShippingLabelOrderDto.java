@@ -1,6 +1,7 @@
 package br.silveira.orderpicking.shippinglabel.dto;
 
 import br.silveira.orderpicking.common.constants.MktPlaceEnum;
+import br.silveira.orderpicking.common.templates.PdfShippingLabelResultTemplateDto;
 import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
@@ -20,19 +21,20 @@ public class ShippingLabelOrderDto {
     private String receiverZipcode;
     private String shippingId;
     private String zplCodeLabel;
+    private double totalPrice;
     private List<ShippingLabelOrderItemDto> orderItem;
 
     public ShippingLabelOrderItemDto getFirstOrderItem(){
         return CollectionUtils.isEmpty(orderItem) ? null : orderItem.get(0);
     }
 
-
     @Data
     public class ShippingLabelOrderItemDto {
         private String id;
         private String title;
         private String sellerSku;
-        private double quantity;
+        private Integer quantity;
         private double unitPrice;
+        private double totalPrice;
     }
 }
