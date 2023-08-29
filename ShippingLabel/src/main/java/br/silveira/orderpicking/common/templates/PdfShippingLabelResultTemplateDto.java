@@ -5,7 +5,6 @@ import lombok.*;
 import java.util.List;
 @Getter
 @Setter
-@Builder
 public class PdfShippingLabelResultTemplateDto extends CommonTemplate {
 
 
@@ -22,6 +21,18 @@ public class PdfShippingLabelResultTemplateDto extends CommonTemplate {
 
     public PdfShippingLabelResultTemplateDto() {
         super("templates/pdf/pdf-shipping-label-result.html");
+    }
+
+    public PdfShippingLabelResultTemplateDto( Long companyId, Integer orderTotalQty, Integer itemTotalQty, Integer skuQty, Integer labelsQty, Double orderTotalAmt, List<Summary> summary, List<Detail> details) {
+        this();
+        this.companyId = companyId;
+        this.orderTotalQty = orderTotalQty;
+        this.itemTotalQty = itemTotalQty;
+        this.skuQty = skuQty;
+        this.labelsQty = labelsQty;
+        this.orderTotalAmt = orderTotalAmt;
+        this.summary = summary;
+        this.details = details;
     }
 
     @Data

@@ -29,7 +29,6 @@ public class ShippingLabelServiceImpl extends CommonService implements ShippingL
     public static final String RECEIVER_ZIPCODE = "receiverZipcode";
     public static final String RECEIVER_CITY_NAME = "receiverCityName";
     private static final String ZIPFILE_FILENAME = "LABEL_ORDERED_%s_%s.zip";
-    private static final String TMP_ZIPFILE_FILENAME = "%s_TMP_LABEL_ORDERED_%s";
 
     @Autowired
     private MktPlaceIntegratorResource mktPlaceIntegratorResource;
@@ -51,7 +50,9 @@ public class ShippingLabelServiceImpl extends CommonService implements ShippingL
 
     @Override
     public List<ShippingLabelOrderDto> getShippingLabelWithZplCodeOrdered(List<ShippingLabelOrderDto> orders, String ordered, Boolean mixMktPlace) {
-        return erinchShippingLabelWithZplCode(getShippingLabelOrdered(orders, ordered, mixMktPlace));
+        List<ShippingLabelOrderDto> shippingLabelOrdered = getShippingLabelOrdered(orders, ordered, mixMktPlace);
+        shippingLabelOrdered = erinchShippingLabelWithZplCode(shippingLabelOrdered);
+        return shippingLabelOrdered;
     }
 
     @Override
@@ -66,54 +67,21 @@ public class ShippingLabelServiceImpl extends CommonService implements ShippingL
         Long companyId = getCompanyId();
         List<ShippingLabelOrderDto> labels = getShippingLabelWithZplCodeOrdered(orders, ordered, mixMktPlace);
         //create pdf template object data
-        PdfShippingLabelResultTemplateDto templateDto = getPdfShippingLabelResultTemplateDto(orders);
+        PdfShippingLabelResultTemplateDto templateDto = PDFUtil.getPdfShippingLabelResultTemplateDto(orders);
         //create pdf file
-        ByteArrayResource pdfBytes = PDFUtil.generatePdfShippingLabelResult(templateDto);
+        File pdfFile = PDFUtil.generatePdfShippingLabelResult(templateDto);
         //create txt with zpl code
-        File labelTxt = FileUtil.createTxtFile("filename", concatenateAllZplCodeLabel(orders));
+        File labelTxt = FileUtil.createTxtFile(concatenateAllZplCodeLabel(orders));
         //create zip file
+        ByteArrayResource zipFile = FileUtil.createZipFile(pdfFile, labelTxt);
 
         //Encapsulate return object
-        File zipFile = File.createTempFile(String.format(TMP_ZIPFILE_FILENAME, companyId, now.toString()), ".zip");
-        ShippingLabelZipFileDto ret = new ShippingLabelZipFileDto();
-        ret.setShippingLabelOrder(orders);
-        ret.setFileName(String.format(ZIPFILE_FILENAME, companyId, now.toString()));
-        ret.setContent(new ByteArrayResource(Files.readAllBytes(zipFile.toPath())));
-        ret.setFileLenght(zipFile.length());
-
-        return ret;
-
-    }
-
-    private PdfShippingLabelResultTemplateDto getPdfShippingLabelResultTemplateDto(List<ShippingLabelOrderDto> orders) {
-        Integer itemTotalQty = 0;
-        Double orderTotalAmt = 0.0;
-        Integer skuQty = 0;
-        Set<String> labelsQty = new HashSet<>();
-        Map<String, Integer> summarySku = new HashMap<String, Integer>();
-        List<PdfShippingLabelResultTemplateDto.Detail> details = new ArrayList<>();
-
-        for (ShippingLabelOrderDto o : orders) {
-            skuQty += o.getOrderItem().size();
-            orderTotalAmt += o.getTotalPrice();
-            labelsQty.add(o.getShippingId());
-            for (ShippingLabelOrderDto.ShippingLabelOrderItemDto i : o.getOrderItem()) {
-                itemTotalQty += i.getQuantity();
-                if (!summarySku.containsKey(i.getTitle())) {
-                    summarySku.put(i.getTitle(), 0);
-                }
-                summarySku.put(i.getTitle(), i.getQuantity() + summarySku.get(i.getTitle()));
-                details.add(new PdfShippingLabelResultTemplateDto.Detail(o.getMktPlace().getDesc(), o.getMktPlaceOrderid(), i.getTitle(), i.getQuantity()));
-            }
-        }
-
-        List<PdfShippingLabelResultTemplateDto.Summary> list = summarySku.keySet().stream().map(p -> new PdfShippingLabelResultTemplateDto.Summary(p, summarySku.get(p))).collect(Collectors.toList());
-        PdfShippingLabelResultTemplateDto ret = PdfShippingLabelResultTemplateDto.builder()
-                .companyId(getCompanyId()).orderTotalQty(orders.size()).itemTotalQty(itemTotalQty).skuQty(summarySku.keySet().size())
-                .labelsQty(labelsQty.size()).orderTotalAmt(orderTotalAmt).details(details).summary(list).build();
-
+        ShippingLabelZipFileDto ret = ShippingLabelZipFileDto.builder().shippingLabelOrder(orders)
+                .fileName(String.format(ZIPFILE_FILENAME, companyId, now.toString()))
+                .fileLenght(zipFile.contentLength()).content(zipFile).build();
         return ret;
     }
+
 
     private String concatenateAllZplCodeLabel(List<ShippingLabelOrderDto> labels) {
         StringBuffer ret = new StringBuffer();

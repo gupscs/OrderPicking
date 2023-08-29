@@ -1,6 +1,8 @@
 package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
         @Index(columnList = "companyId"),
         @Index(columnList = "sellerId")
 })
+@AllArgsConstructor
+@NoArgsConstructor
 public class MercadoLivreSetup {
 
 
@@ -33,9 +37,6 @@ public class MercadoLivreSetup {
     private LocalDateTime updateDate;
     private String updateId;
     private Boolean enable;
-
-    public MercadoLivreSetup(){
-    }
 
     public MercadoLivreSetup(Long companyId, String authorizationCode, String insertId, LocalDateTime insertDate) {
         this.companyId = companyId;

@@ -6,7 +6,7 @@ public abstract class CommonTemplate {
 
 
     protected CommonTemplate(String templateHtmlFile) {
-        templateHtmlFile = templateHtmlFile;
+        this.templateHtmlFile = templateHtmlFile;
     }
 
     public String getTemplateHtmlFile() {
