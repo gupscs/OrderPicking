@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("OrderSearchMercadoLivreServiceImpl")
+@Service
 @Slf4j
 public class OrderSearchMercadoLivreServiceImpl extends CommonService implements OrderSearchService{
 

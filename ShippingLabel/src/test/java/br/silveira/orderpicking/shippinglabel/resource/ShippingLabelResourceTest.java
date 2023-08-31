@@ -52,24 +52,6 @@ public class ShippingLabelResourceTest extends Mock{
 
     }
 
-    private List<ShippingLabelOrderDto> createShippingLabelOrderDto() {
-        List<ShippingLabelOrderDto> ret = new ArrayList<>();
-        ShippingLabelOrderDto.ShippingLabelOrderItemDto i = new ShippingLabelOrderDto.ShippingLabelOrderItemDto("abc-1", "Foguete Space X", "fsx-01", 100, 1.00, 100.00);
-        List<ShippingLabelOrderDto.ShippingLabelOrderItemDto> item = new ArrayList<>();
-        item.add(i);
-        ShippingLabelOrderDto d = new ShippingLabelOrderDto(1L, MktPlaceEnum.MERCADO_LIVRE, "1", "order-01", "open", LocalDateTime.now(), "São Paulo", "12345001", "1", "", 100.00, item);
-        ret.add(d);
-        i = new ShippingLabelOrderDto.ShippingLabelOrderItemDto("abc-2", "Lança Chamas", "lc-01", 100, 1.00, 100.00);
-        item = new ArrayList<>();
-        item.add(i);
-        d = new ShippingLabelOrderDto(1L, MktPlaceEnum.MERCADO_LIVRE, "1", "order-02", "open", LocalDateTime.now(), "Campinas", "12345002", "2", "", 100.00, item);
-        ret.add(d);
-        i = new ShippingLabelOrderDto.ShippingLabelOrderItemDto("abc-3", "Batmóvel", "bm-01", 100, 1.00, 100.00);
-        item = new ArrayList<>();
-        item.add(i);
-        d = new ShippingLabelOrderDto(1L, MktPlaceEnum.MERCADO_LIVRE, "1", "order-03", "open", LocalDateTime.now(), "Valinhos", "12345003", "3", "", 100.00, item);
-        ret.add(d);
-        return ret;
-    }
+
 
 }

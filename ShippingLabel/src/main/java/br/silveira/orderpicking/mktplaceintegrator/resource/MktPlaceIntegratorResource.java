@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,8 +29,7 @@ import java.util.List;
 @Slf4j
 public class MktPlaceIntegratorResource extends CommonResource {
     @Autowired
-    @Qualifier("OrderSearchMercadoLivreServiceImpl")
-    private OrderSearchService OrderSearchMercadoLivreService;
+    private List<OrderSearchService> orderSearchServices;
 
     @Autowired
     private MercadoLivreClientRestRepository mercadoLivreClientRestRepository;
@@ -43,7 +43,8 @@ public class MktPlaceIntegratorResource extends CommonResource {
     @GetMapping("/orders")
     public ResponseEntity<List<OrderDto>> getOrders(@Valid @RequestBody(required = false) SearchOrderDto search){
         try {
-            List<OrderDto> ret = OrderSearchMercadoLivreService.getOrdersFromMarketPlacesApi(search); //TODO CREATE A FACTORY
+            List<OrderDto> ret = new ArrayList<>();
+            orderSearchServices.forEach(s -> ret.addAll(s.getOrdersFromMarketPlacesApi(search)));
             if (CollectionUtils.isEmpty(ret)) {
                 return ResponseEntity.noContent().build();
             } else {
