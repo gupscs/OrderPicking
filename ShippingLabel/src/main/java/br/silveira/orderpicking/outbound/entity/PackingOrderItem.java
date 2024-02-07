@@ -1,4 +1,4 @@
-package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity;
+package br.silveira.orderpicking.outbound.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,26 +14,25 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(indexes = {
-        @Index(columnList = "companyId"),
-        @Index(columnList = "sellerId")
+        @Index(columnList = "companyId")
 })
 @AllArgsConstructor
 @NoArgsConstructor
-public class MercadoLivreSetup {
-
+public class PackingOrderItem {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private Long companyId;
-    private String authorizationCode;
-    private Integer sellerId;
-    private String apiToken;
-    private String apiRefreshToken;
-    private LocalDateTime lastApiTokenUpdated;
-    private Integer expiresIn;
-    public String scope;
+    private Long orderId;
+    private Long orderItemId;
+    private String mktPlaceOrderId;
+    private String itemCd;
+    private String itemDesc;
+    private Integer quantity;
+    @ManyToOne
+    private PackingDetail packingDetail;
     @Column(nullable = false)
     @CreatedDate
     private LocalDateTime insertDate;
@@ -44,12 +43,4 @@ public class MercadoLivreSetup {
     private LocalDateTime updateDate;
     @LastModifiedBy
     private String updateId;
-    private Boolean enable;
-
-    public MercadoLivreSetup(Long companyId, String authorizationCode, String insertId, LocalDateTime insertDate) {
-        this.companyId = companyId;
-        this.authorizationCode = authorizationCode;
-        this.insertDate = insertDate;
-        this.insertId = insertId;
-    }
 }

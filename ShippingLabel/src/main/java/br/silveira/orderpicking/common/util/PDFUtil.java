@@ -1,22 +1,18 @@
 package br.silveira.orderpicking.common.util;
 
 import br.silveira.orderpicking.common.templates.PdfShippingLabelResultTemplateDto;
-import br.silveira.orderpicking.shippinglabel.dto.ShippingLabelOrderDto;
-import org.springframework.core.io.ByteArrayResource;
+import br.silveira.orderpicking.shippingLabel.dto.ShippingLabelDownloadRequestDto;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class PDFUtil {
-
-
 
     public static File generatePdfShippingLabelResult(PdfShippingLabelResultTemplateDto dto) throws Exception {
         String html = TemplateUtil.generateHtml(dto);
@@ -35,23 +31,23 @@ public class PDFUtil {
     }
 
 
-    public static PdfShippingLabelResultTemplateDto getPdfShippingLabelResultTemplateDto(List<ShippingLabelOrderDto> orders) {
+    public static PdfShippingLabelResultTemplateDto getPdfShippingLabelResultTemplateDto(List<ShippingLabelDownloadRequestDto.ShippingLabelRequestOrderDto> orders) {
         Integer itemTotalQty = 0;
         Double orderTotalAmt = 0.0;
         Set<String> labelsQty = new HashSet<>();
         Map<String, Integer> summarySku = new HashMap<String, Integer>();
         List<PdfShippingLabelResultTemplateDto.Detail> details = new ArrayList<>();
 
-        for (ShippingLabelOrderDto o : orders) {
+        for (ShippingLabelDownloadRequestDto.ShippingLabelRequestOrderDto o : orders) {
             orderTotalAmt += o.getTotalPrice();
             labelsQty.add(o.getShippingId());
-            for (ShippingLabelOrderDto.ShippingLabelOrderItemDto i : o.getOrderItem()) {
+            for (ShippingLabelDownloadRequestDto.ShippingLabelRequestOrderItemDto i : o.getOrderItem()) {
                 itemTotalQty += i.getQuantity();
                 if (!summarySku.containsKey(i.getTitle())) {
                     summarySku.put(i.getTitle(), 0);
                 }
                 summarySku.put(i.getTitle(), i.getQuantity() + summarySku.get(i.getTitle()));
-                details.add(new PdfShippingLabelResultTemplateDto.Detail(o.getMktPlace().getDesc(), o.getMktPlaceOrderid(), i.getTitle(), i.getQuantity()));
+                details.add(new PdfShippingLabelResultTemplateDto.Detail(o.getMktPlace().getDesc(), o.getMktPlaceOrderId(), i.getTitle(), i.getQuantity()));
             }
         }
 

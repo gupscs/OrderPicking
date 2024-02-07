@@ -93,6 +93,6 @@ public class MercadoLivreServiceImpl extends CommonService implements MercadoLiv
             entity.setUpdateId(getLoggedUser());
         }
         mercadoLivreSetupRepository.save(entity);
-
+        log.info("Mercado Livre Setup Done - Company Id {}", companyId);
     }
 }

@@ -1,8 +1,9 @@
-package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity;
+package br.silveira.orderpicking.outbound.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bouncycastle.util.Pack;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -10,30 +11,31 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
 @Table(indexes = {
-        @Index(columnList = "companyId"),
-        @Index(columnList = "sellerId")
+        @Index(columnList = "companyId")
 })
 @AllArgsConstructor
 @NoArgsConstructor
-public class MercadoLivreSetup {
-
+public class Packing {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private Long companyId;
-    private String authorizationCode;
-    private Integer sellerId;
-    private String apiToken;
-    private String apiRefreshToken;
-    private LocalDateTime lastApiTokenUpdated;
-    private Integer expiresIn;
-    public String scope;
+    @ManyToOne
+    private Outbound outbound;
+    private PackingStatus packingStatus;
+    private Double completedStatus;
+    @OneToMany(mappedBy = "packing")
+    private List<PackingDetail> packingDetail;
+    private Employee employee;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     @Column(nullable = false)
     @CreatedDate
     private LocalDateTime insertDate;
@@ -44,12 +46,12 @@ public class MercadoLivreSetup {
     private LocalDateTime updateDate;
     @LastModifiedBy
     private String updateId;
-    private Boolean enable;
 
-    public MercadoLivreSetup(Long companyId, String authorizationCode, String insertId, LocalDateTime insertDate) {
-        this.companyId = companyId;
-        this.authorizationCode = authorizationCode;
-        this.insertDate = insertDate;
-        this.insertId = insertId;
+    public Packing(Long companyId, Outbound outbound, Employee employee) {
+        this.setOutbound(outbound);
+        this.setPackingStatus(PackingStatus.PENDING);
+        this.setEmployee(employee);
+        this.setCompanyId(companyId);
+        this.setCompletedStatus(0.0);
     }
 }

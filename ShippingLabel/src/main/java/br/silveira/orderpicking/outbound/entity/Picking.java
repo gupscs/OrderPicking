@@ -1,4 +1,4 @@
-package br.silveira.orderpicking.mktplaceintegrator.mktplaces.mercadolivre.entity;
+package br.silveira.orderpicking.outbound.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,30 +10,31 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
 @Table(indexes = {
-        @Index(columnList = "companyId"),
-        @Index(columnList = "sellerId")
+        @Index(columnList = "companyId")
 })
 @AllArgsConstructor
 @NoArgsConstructor
-public class MercadoLivreSetup {
-
+public class Picking {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private Long companyId;
-    private String authorizationCode;
-    private Integer sellerId;
-    private String apiToken;
-    private String apiRefreshToken;
-    private LocalDateTime lastApiTokenUpdated;
-    private Integer expiresIn;
-    public String scope;
+    @ManyToOne
+    private Outbound outbound;
+    private PickingStatus pickingStatus;
+    private Double completedStatus;
+    @OneToMany(mappedBy = "picking")
+    private List<PickingDetail> pickingDetail;
+    private Employee employee;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     @Column(nullable = false)
     @CreatedDate
     private LocalDateTime insertDate;
@@ -44,12 +45,6 @@ public class MercadoLivreSetup {
     private LocalDateTime updateDate;
     @LastModifiedBy
     private String updateId;
-    private Boolean enable;
 
-    public MercadoLivreSetup(Long companyId, String authorizationCode, String insertId, LocalDateTime insertDate) {
-        this.companyId = companyId;
-        this.authorizationCode = authorizationCode;
-        this.insertDate = insertDate;
-        this.insertId = insertId;
-    }
+
 }

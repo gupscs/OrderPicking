@@ -1,10 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+<p>Visão Geral</p>
+    <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+        <tbody>
+        <tr>
+            <td>Qtd de Pedidos</td>
+            <td>Qtd de Itens</td>
+            <td>Qtd de SKU</td>
+            <td>Qtd de Etiquetas</td>
+            <td>Valor total dos Pedidos</td>
+        </tr>
+        <tr>
+            <td><span th:text="${obj.orderTotalQty}"></span></td>
+            <td><span th:text="${obj.itemTotalQty}"></span></td>
+            <td><span th:text="${obj.skuQty}"></span></td>
+            <td><span th:text="${obj.labelsQty}"></span></td>
+            <td><span th:text="${obj.orderTotalAmt}"></span></td>
+        </tr>
+        </tbody>
+    </table>
 
-</body>
+    <p>Visão por SKU</p>
+
+    <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+        <tbody>
+        <tr>
+            <td>SKU</td>
+            <td>Quantidade</td>
+        </tr>
+        <tr th:each="summary: ${obj.summary}">
+            <td><span th:text="${summary.sku}"></span></td>
+            <td><span th:text="${summary.skuTotalQty}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>Lista detalhada dos pedidos</p>
+
+    <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
+        <tbody>
+        <tr>
+            <td>No</td>
+            <td>Market Place</td>
+            <td>Pedido</td>
+            <td>SKU</td>
+            <td>Qtd</td>
+            <td>Anota&ccedil;&atilde;o</td>
+        </tr>
+        <tr th:each="detail : ${obj.details}"
+            th:style="${detailStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${detailStat.even}? 'even' : 'odd'">
+            <td><span th:text="${detailStat.index}"></span></td>
+            <td><span th:text="${detail.mktPlace}"></span></td>
+            <td><span th:text="${detail.mktPlaceOrderId}"></span></td>
+            <td><span th:text="${detail.sku}"></span></td>
+            <td><span th:text="${detail.skuTotalQty}"></span></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
 </html>

@@ -28,4 +28,8 @@ public class CommonResource {
         }
         return builder.build();
     }
+
+    public String getLogPrefix(){
+        return String.format("[Login: %s;Company Id: %s]", getLoggedUser(), getCompanyId().toString());
+    }
 }

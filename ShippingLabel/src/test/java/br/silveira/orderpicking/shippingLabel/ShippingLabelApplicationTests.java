@@ -1,4 +1,4 @@
-package br.silveira.orderpicking.shippinglabel;
+package br.silveira.orderpicking.shippingLabel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

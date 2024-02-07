@@ -1,11 +1,10 @@
 package br.silveira.orderpicking.common.util;
 
-import org.springframework.core.io.ByteArrayResource;
+import br.silveira.orderpicking.common.FileZipEntryDto;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.zip.ZipEntry;
@@ -19,14 +18,14 @@ public class FileUtil {
         return file;
     }
 
-    public static ByteArrayResource createZipFile(File ... files) throws IOException {
+    public static byte[] createZipFile(FileZipEntryDto... files) throws IOException {
         File tmpZipFile = createTmpFile("ZIP_TMP_");
         final FileOutputStream fos = new FileOutputStream(tmpZipFile);
         ZipOutputStream zipOut = new ZipOutputStream(fos);
 
-        for(File fileToZip : files){
-            FileInputStream fis = new FileInputStream(fileToZip);
-            ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+        for(FileZipEntryDto fileToZip : files){
+            FileInputStream fis = new FileInputStream(fileToZip.getFile());
+            ZipEntry zipEntry = new ZipEntry(fileToZip.getFileNameInZip());
             zipOut.putNextEntry(zipEntry);
 
             byte[] bytes = new byte[1024];
@@ -40,8 +39,7 @@ public class FileUtil {
         zipOut.close();
         fos.close();
 
-        ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(tmpZipFile.toPath()));
-        return byteArrayResource;
+        return Files.readAllBytes(tmpZipFile.toPath());
 
     }
 
@@ -53,4 +51,18 @@ public class FileUtil {
         writer.close();
         return file;
     }
+
+    public static File rename(File file , String newName) throws IOException {
+        File rename = new File(file.getParent(), newName);
+        Files.move(file.toPath(), rename.toPath());
+        return rename;
+    }
+
+    private static String getRandonString() {
+        byte[] array = new byte[7]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+        return LocalDateTime.now().toString()+"-"+generatedString;
+    }
+
 }
